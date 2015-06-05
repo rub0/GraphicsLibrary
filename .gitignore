@@ -1,0 +1,52 @@
+# *****************************************************************************************
+# Unnecessary files 
+# *****************************************************************************************
+
+build.xml
+.DS_STORE
+
+# *****************************************************************************************
+# Unnecessary folders 
+# *****************************************************************************************
+
+/CELayoutEditor 0.7.1/
+
+
+# Ignore dependencies
+/dependencies/glm/
+
+# Ignore documentation
+/Doc/
+
+# Ignore folder ipch
+/ipch/
+
+# *****************************************************************************************
+# Patterns
+# *****************************************************************************************
+
+# Ignore any database created by Visual Studio
+*.sdf
+*.suo
+*.opensdf
+
+#__________________________________________________________________________________________
+
+# Ignore anything inside the project folder that is not a project file
+# To prevent git from ignoring certain files inside certain folders we
+# need to erase each level and then include what we want inside that level
+# which leads us to the following-not-very-elegant solution:
+
+# =====================
+# Clean the first level
+# =====================
+
+# Clean first level
+/Exe/*
+
+# Bring back media
+!/Exes/resources/
+
+# Profile files
+*.psess
+*.vsp

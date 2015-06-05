@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Archivos de recursos">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Math">
+      <UniqueIdentifier>{b9ee96ad-29a5-4f2d-bf09-7346750f6bef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Math\Source">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Math\Header">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Graphics">
+      <UniqueIdentifier>{7494da5e-e056-4ea1-baa7-1aab2f328cec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Header">
+      <UniqueIdentifier>{1e0a4aaa-25a0-4ab1-89f9-2c18ab24259d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics\Source">
+      <UniqueIdentifier>{221f651d-6629-435e-92f3-f5d951738379}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="main">
+      <UniqueIdentifier>{2d1e0797-153f-421a-97bb-78dce08c39bd}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ReadMe.txt" />
+    <None Include="small.ico">
+      <Filter>Archivos de recursos</Filter>
+    </None>
+    <None Include="OpenGL.ico">
+      <Filter>Archivos de recursos</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="targetver.h">
+      <Filter>Math\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Math\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Math\Math.h">
+      <Filter>Math\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Math\Matrix3.h">
+      <Filter>Math\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Math\Matrix4.h">
+      <Filter>Math\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Math\Quaternion.h">
+      <Filter>Math\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Math\Vector3.h">
+      <Filter>Math\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>main</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Graphics\shader.h">
+      <Filter>Graphics\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Math\MatrixOperations.h">
+      <Filter>Math\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Math\Vector4.h">
+      <Filter>Math\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Math\TransformUtils.h">
+      <Filter>Math\Header</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\core\Math\Quaternion.cpp">
+      <Filter>Math\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\Math\Matrix3.cpp">
+      <Filter>Math\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\Math\Matrix4.cpp">
+      <Filter>Math\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\Graphics\shader.cpp">
+      <Filter>Graphics\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="test.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="OpenGL.rc">
+      <Filter>Archivos de recursos</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+</Project>
