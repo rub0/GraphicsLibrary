@@ -15,7 +15,7 @@ namespace Engine
 	{
 	public:
 
-		static const size_t MATRIX_SIZE = sizeof(float) * 16;
+		static const size_t MATRIX_SIZE = sizeof(float) * 9;
 
 		// from: https://github.com/cinder/Cinder/blob/master/include/cinder/Matrix33.h
 		// This class is OpenGL friendly and stores the m as how OpenGL would expect it.
@@ -45,7 +45,10 @@ namespace Engine
 
 
 		Matrix3();
-		Matrix3(const Matrix3 &other);
+		Matrix3(const Matrix3 &other)
+		{
+			std::memcpy( m, other.m, MATRIX_SIZE );
+		}
 		Matrix3(const Vector3 &axis, float angle);
 
 
@@ -55,7 +58,20 @@ namespace Engine
 
 		const Matrix3 operator*(const Matrix3 &rhs)
 		{
+			Matrix3 result;
+			result.m00 = m00 * rhs.m00 + m10 * rhs.m01 + m20 * rhs.m02;
+			result.m10 = m00 * rhs.m10 + m10 * rhs.m11 + m20 * rhs.m12;
+			result.m20 = m00 * rhs.m20 + m10 * rhs.m21 + m20 * rhs.m22;
 
+			result.m01 = m01 * rhs.m00 + m11 * rhs.m01 + m21 * rhs.m02;
+			result.m11 = m01 * rhs.m10 + m11 * rhs.m11 + m21 * rhs.m12;
+			result.m21 = m01 * rhs.m20 + m11 * rhs.m21 + m21 * rhs.m22;
+
+			result.m02 = m02 * rhs.m00 + m12 * rhs.m01 + m22 * rhs.m02;
+			result.m12 = m02 * rhs.m10 + m12 * rhs.m11 + m22 * rhs.m12;
+			result.m22 = m02 * rhs.m20 + m12 * rhs.m21 + m22 * rhs.m22;
+
+			return result;
 		}
 
 		const Matrix3 operator/(const Matrix3 &rhs)
@@ -108,6 +124,21 @@ namespace Engine
 		{
 			return - atan2(m02, m12);
 		}
+
+		void setToIdentity()
+		{
+			m[ 0] = 1; m[ 3] = 0; m[ 6] = 0;
+			m[ 1] = 0; m[ 4] = 1; m[ 7] = 0;
+			m[ 2] = 0; m[ 5] = 0; m[ 8] = 1;
+		}
+
+		void setToZero()
+		{
+			m[ 0] = 0; m[ 3] = 0; m[ 6] = 0;
+			m[ 1] = 0; m[ 4] = 0; m[ 7] = 0;
+			m[ 2] = 0; m[ 5] = 0; m[ 8] = 0;
+		}
+
 	private:
 
 

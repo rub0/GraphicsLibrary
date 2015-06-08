@@ -18,11 +18,13 @@ namespace Math
 
 	inline Matrix4 rotateAround(Matrix4 &in, const Vector3 &axis, float angle)
 	{
+		Matrix4 result = in;
+		
 		Matrix3 rotation(axis, angle);
-
-		Matrix4 trans(rotation);
-
-		return in * trans;
+		Matrix3 aux = result.getRotationMatrix();
+		rotation = rotation * aux;
+		result.setRotationMatrix(rotation);
+		return result;
 	}
 
 	inline Matrix4 scale(Matrix4 &in, const Vector3 &scale)
@@ -57,6 +59,19 @@ namespace Math
 		result.mcols[2][3] = - 1;
 		result.mcols[3][2] = - (2 * zFar * zNear) / (zFar - zNear);
 		
+		return result;
+	}
+
+	Matrix4 orthoMatrix(float left, float right, float bottom, float top)
+	{
+		Matrix4 result;
+		result.setToZero();
+
+		result.mcols[0][0] = 2 / (right - left);
+		result.mcols[1][1] = 2 / (top - bottom);
+		result.mcols[2][2] = - 1;
+		result.mcols[3][0] = - (right + left) / (right - left);
+		result.mcols[3][1] = - (top + bottom) / (top - bottom);
 		return result;
 	}
 }
