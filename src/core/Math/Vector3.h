@@ -19,6 +19,7 @@ namespace Engine
 	public:
 
 		friend class Quaternion;
+
 		/********************
 		* BASE CONSTRUCTORS *
 		*********************/
@@ -35,17 +36,17 @@ namespace Engine
 		* BASIC OPERATIONS *
 		********************/
 
-		Vector3 operator+(const Vector3 &rhs)
+		Vector3 operator+(const Vector3 &rhs) const
 		{
 			return Vector3(rhs.x+this->x, rhs.y+this->y, rhs.z+this->z);
 		}
 
-		Vector3 operator+(float factor)
+		Vector3 operator+(float factor) const
 		{
 			return Vector3(factor+this->x, factor+this->y, factor+this->z);
 		}
 
-		Vector3 operator+=(const Vector3 &rhs)
+		Vector3 operator+=(const Vector3 &rhs) 
 		{
 			x+=rhs.x;
 			y+=rhs.y;
@@ -63,14 +64,14 @@ namespace Engine
 			return *this;
 		}
 
-		Vector3 operator-(const Vector3 &rhs)
+		Vector3 operator-(const Vector3 &rhs) const
 		{
-			return Vector3(rhs.x-this->x, rhs.y-this->y, rhs.z-this->z);
+			return Vector3(this->x - rhs.x, this->y - rhs.y, this->z - rhs.z);
 		}
 
-		Vector3 operator-(float factor)
+		Vector3 operator-(float factor) const
 		{
-			return Vector3(factor-this->x, factor-this->y, factor-this->z);
+			return Vector3(this->x - factor, this->y - factor, this->z - factor);
 		}
 
 		Vector3 operator-=(const Vector3 &rhs)
@@ -91,12 +92,12 @@ namespace Engine
 			return *this;
 		}
 
-		const Vector3 operator*(const Vector3 &rhs)
+		const Vector3 operator*(const Vector3 &rhs) const
 		{
 			return Vector3(rhs.x*this->x, rhs.y*this->y, rhs.z*this->z);
 		}
 
-		const Vector3 operator*(float factor)
+		const Vector3 operator*(float factor) const
 		{
 			return Vector3(factor*x, factor*y, factor*z);
 		}
@@ -201,7 +202,16 @@ namespace Engine
 			operator/=(length());
 		}
 
+		static Vector3 normalize(const Vector3 &v)
+		{
+			Vector3 result(v);
+			result.normalize();
+			return result;
+		}
+
 		float x, y, z;
 	};
+
+	static Vector3 ZERO(0,0,0);
 }
 #endif

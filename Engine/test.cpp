@@ -1,10 +1,11 @@
-#include "stdafx.h"
+/*#include "stdafx.h"
 #include "OpenGL.h"
 #include <Math/Vector3.h>
 #include <GL\glew.h>
 #include <GLFW\glfw3.h>
 #include <iostream>
 #include "Graphics\shader.h"
+#include "Graphics\Camera.h"
 #include <soil\SOIL.h>
 #include "../Dependencies/glm/glm/glm.hpp"
 #include "../Dependencies/glm/glm/gtc/matrix_transform.hpp"
@@ -17,6 +18,13 @@
 
 // Window dimensions
 const GLuint WIDTH = 800, HEIGHT = 600;
+const float sensitivity = 0.01f;
+Engine::Vector3 cameraPos(0.0, 0.0, -3.0);
+Graphics::Camera camera;
+
+bool firstmouse = true;
+
+float xPos, yPos;
 
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mode)
 {
@@ -24,9 +32,46 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
     // closing the application
     if(key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
     	glfwSetWindowShouldClose(window, GL_TRUE);
+	GLfloat cameraSpeed = 0.05f;
+	Engine::Vector3 cameraFront(0.0, 0.0, -1.0);
+	Engine::Vector3 cameraUp(0.0, 1.0, 0.0);
+	Engine::Vector3 right = cameraFront.crossProduct(cameraUp);
+	right.normalize();
+    if(key == GLFW_KEY_W)
+        cameraPos += cameraFront * cameraSpeed;
+    if(key == GLFW_KEY_S)
+        cameraPos -= cameraFront * cameraSpeed ;
+    if(key == GLFW_KEY_A)
+		cameraPos += right * cameraSpeed;
+    if(key == GLFW_KEY_D)
+        cameraPos -= right * cameraSpeed;
 } 
 
-int main()
+void mouse_callback(GLFWwindow* window, double xpos, double ypos)
+{
+	if(firstmouse)
+	{
+		xPos = xpos;
+		yPos = ypos;
+		firstmouse = false;
+		return;
+	}
+	float xOffset = xpos - xPos;
+	float yOffset = ypos - yPos;
+
+	xPos = xpos;
+	yPos = ypos;
+
+	float pitch = camera.getPitch();
+
+	if(pitch > 89.0f || pitch < -89.0f)
+		return;
+
+	camera.rotate(Engine::Vector3(1,0,0), xOffset * sensitivity);
+	camera.rotate(Engine::Vector3(0,1,0), yOffset * sensitivity);
+}
+
+int mainGettingStarted()
 {
 
 	
@@ -45,6 +90,8 @@ int main()
 
     // Set the required callback functions
     glfwSetKeyCallback(window, key_callback);
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	glfwSetCursorPosCallback(window, mouse_callback);
 
     // Set this to true so GLEW knows to use a modern approach to retrieving function pointers and extensions
     glewExperimental = GL_TRUE;
@@ -177,6 +224,7 @@ int main()
 	//free the image memory and unbind the texture object
 	SOIL_free_image_data(image2);
 	
+	//camera.setDirection(Vector3(0.0, 0.0, -1.0));
 
     // Game loop
     while (!glfwWindowShouldClose(window))
@@ -197,38 +245,25 @@ int main()
         glBindTexture(GL_TEXTURE_2D, texture2);
         glUniform1i(glGetUniformLocation(ourShader.getProgram(), "ourTexture2"), 1);
 
-		/*// Create transformations
-        // Get matrix's uniform location and set matrix
-        GLint modelLoc = glGetUniformLocation(ourShader.getProgram(), "model");
-        GLint viewLoc = glGetUniformLocation(ourShader.getProgram(), "view");
-        GLint projLoc = glGetUniformLocation(ourShader.getProgram(), "projection");
-
-
-		Engine::Matrix4 model, view, projection;
-
-		
-		model = Math::rotateAround(model, Engine::Vector3(0.5f, 1.0f, 0.0f), (GLfloat)glfwGetTime() * 1.0f);
-		view = Math::createTransMatrix(view, Engine::Vector3(0.0f, 0.0f, -3.0f));
-		projection = Math::perspectiveMatrix(-45.0f, 4/3, 0.1f, 100.f);
-
-        glUniformMatrix4fv(modelLoc, 1, GL_FALSE, model.m);
-        glUniformMatrix4fv(viewLoc, 1, GL_FALSE, view.m);
-        glUniformMatrix4fv(projLoc, 1, GL_FALSE, projection.m);*/
-
 		// Create transformations
-        glm::mat4 model;
-        glm::mat4 view;
-        glm::mat4 projection;
 		Engine::Matrix4 view2, projection2;
-		view2 = Math::createTransMatrix(view2, Engine::Vector3(0.0f, 0.0f, -3.0f));
-		projection2 = Math::perspectiveMatrix(-45.0f, 4/3, 0.1f, 100.f);
+
+		//setting the camera
+		GLfloat radius = 10.0f;
+		GLfloat camX = sin(glfwGetTime()) * radius;
+		GLfloat camZ = cos(glfwGetTime()) * radius;
+
+		camera.setPosition(cameraPos);
+		//camera.setTarget(Vector3(0.0, 0.0, 0.0));
+		//camera.setDirection(Vector3(0.0, 0.0, -1.0));
+		camera.buildViewMatrix();
+		view2 = camera.getViewMatrix();
+		projection2 = Math::perspectiveMatrix(-45.0f, WIDTH/HEIGHT, 0.1f, 100.f);
+
+		glm::mat4 view;
+		view = glm::lookAt(glm::vec3(camX, 0.0, camZ), glm::vec3(0.0, 0.0, 0.0), glm::vec3(0.0, 1.0, 0.0));
 
 
-
-        model = glm::rotate(model, (GLfloat)glfwGetTime() * 2.0f, glm::vec3(0.5f, 1.0f, 0.0f));
-        view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
-        // Note: currently we set the projection matrix each frame, but since the projection matrix rarely changes it's often best practice to set it outside the main loop only once.
-        projection = glm::perspective(45.0f, (GLfloat)WIDTH / (GLfloat)HEIGHT, 0.1f, 100.0f);
         // Get their uniform location
         GLint modelLoc = glGetUniformLocation(ourShader.getProgram(), "model");
         GLint viewLoc = glGetUniformLocation(ourShader.getProgram(), "view");
@@ -236,6 +271,7 @@ int main()
         // Pass them to the shaders
 		
         glUniformMatrix4fv(viewLoc, 1, GL_FALSE, view2.m);
+        //glUniformMatrix4fv(viewLoc, 1, GL_FALSE, glm::value_ptr(view));
         glUniformMatrix4fv(projLoc, 1, GL_FALSE, projection2.m);
 
         // Activate shader
@@ -257,19 +293,6 @@ int main()
 			Engine::Vector3( 1.5f,  0.2f, -1.5f), 
 			Engine::Vector3(-1.3f,  1.0f, -1.5f)  
 		};
-
-		glm::vec3 cubePositions2[] = {
-        glm::vec3( 0.0f,  0.0f,  0.0f),
-        glm::vec3( 2.0f,  5.0f, -15.0f),
-        glm::vec3(-1.5f, -2.2f, -2.5f),
-        glm::vec3(-3.8f, -2.0f, -12.3f),
-        glm::vec3( 2.4f, -0.4f, -3.5f),
-        glm::vec3(-1.7f,  3.0f, -7.5f),
-        glm::vec3( 1.3f, -2.0f, -2.5f),
-        glm::vec3( 1.5f,  2.0f, -2.5f),
-        glm::vec3( 1.5f,  0.2f, -1.5f),
-        glm::vec3(-1.3f,  1.0f, -1.5f)
-    };
 
 		for(GLuint i = 0; i < 10; i++)
 		{
@@ -297,4 +320,4 @@ int main()
     return 0;
 }
 
-
+*/

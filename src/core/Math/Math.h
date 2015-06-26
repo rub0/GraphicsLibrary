@@ -4,6 +4,7 @@ namespace Math
 {
 	//constants
 	static const double EPSILON  = 4.37114e-05;
+	static const double EPSILON2  = EPSILON*EPSILON;
 	static const double M_PI     = 3.14159265358979323846;
 	static const double M_2PI    = 6.28318530717958707692;
 	static const double M_HALFPI = M_PI * 0.5;

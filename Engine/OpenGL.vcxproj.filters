@@ -66,14 +66,26 @@
     <ClInclude Include="..\src\core\Graphics\shader.h">
       <Filter>Graphics\Header</Filter>
     </ClInclude>
-    <ClInclude Include="..\src\core\Math\MatrixOperations.h">
-      <Filter>Math\Header</Filter>
-    </ClInclude>
     <ClInclude Include="..\src\core\Math\Vector4.h">
       <Filter>Math\Header</Filter>
     </ClInclude>
     <ClInclude Include="..\src\core\Math\TransformUtils.h">
       <Filter>Math\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Graphics\Camera.h">
+      <Filter>Graphics\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Graphics\Plane.h">
+      <Filter>Graphics\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Graphics\FreeCamera.h">
+      <Filter>Graphics\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Graphics\IGEntity.h">
+      <Filter>Graphics\Header</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\core\Graphics\TexturedPlane.h">
+      <Filter>Graphics\Header</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -94,6 +106,27 @@
     </ClCompile>
     <ClCompile Include="test.cpp">
       <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\Graphics\Camera.cpp">
+      <Filter>Graphics\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\cookbook.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\Graphics\Plane.cpp">
+      <Filter>Graphics\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\Graphics\FreeCamera.cpp">
+      <Filter>Graphics\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\RipperPlane.cpp">
+      <Filter>main</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\Graphics\IGEntity.cpp">
+      <Filter>Graphics\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\core\Graphics\TexturedPlane.cpp">
+      <Filter>Graphics\Source</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

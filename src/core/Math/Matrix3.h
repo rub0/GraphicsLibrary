@@ -32,7 +32,7 @@ namespace Engine
 		union {
 			float m[9];
 			struct {
-				// This looks like it's transposed from the above, but it's really not.
+				// This looks like it's transposed from the above, but it's floatly not.
 				// It just has to be written this way so it follows the right ordering
 				// in the memory layout as well as being mathematically correct.
 				float m00, m10, m20;
@@ -51,6 +51,20 @@ namespace Engine
 		}
 		Matrix3(const Vector3 &axis, float angle);
 
+		Matrix3 (float fEntry00, float fEntry01, float fEntry02,
+                    float fEntry10, float fEntry11, float fEntry12,
+                    float fEntry20, float fEntry21, float fEntry22)
+		{
+			mcols[0][0] = fEntry00;
+			mcols[0][1] = fEntry01;
+			mcols[0][2] = fEntry02;
+			mcols[1][0] = fEntry10;
+			mcols[1][1] = fEntry11;
+			mcols[1][2] = fEntry12;
+			mcols[2][0] = fEntry20;
+			mcols[2][1] = fEntry21;
+			mcols[2][2] = fEntry22;
+		}
 
 		/*******************
 		* BASIC OPERATIONS *
@@ -138,6 +152,11 @@ namespace Engine
 			m[ 1] = 0; m[ 4] = 0; m[ 7] = 0;
 			m[ 2] = 0; m[ 5] = 0; m[ 8] = 0;
 		}
+
+		void fromEulerAngles(float pitch, float yaw, float roll);
+		void toEulerAngles(float &pitch, float &yaw, float &roll);
+
+		void rotate(const Vector3& axis, float angle);
 
 	private:
 
